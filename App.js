@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import VerificationSelectorScreen from './screens/VerificationSelectorScreen';
 import AlarmRingingScreen from './screens/AlarmRingingScreen';
+import ConfirmationScreen from './screens/ConfirmationScreen';
 
 const C = { ink: '#1a1a1a', g1: '#4d4d4d', g2: '#8c8c8c', g3: '#c9c9c9', g4: '#f0f0f0', white: '#ffffff' };
 const DAYS = ['L','M','M','J','V','S','D'];
@@ -32,7 +33,7 @@ export default function App() {
         {screen === 'verify' && <VerificationSelectorScreen nav={nav} verification={verification} setVerification={setVerification} />}
         {screen === 'ringing' && <AlarmRingingScreen nav={nav} />}
         {screen === 'scan' && <Scan nav={nav} />}
-        {screen === 'done' && <Done nav={nav} />}
+        {screen === 'done' && <ConfirmationScreen nav={nav} />}
       </View>
       <SettingsModal visible={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </SafeAreaView>
@@ -97,10 +98,6 @@ function Scan({nav}) {
   return <View style={s.flex}><View style={s.scanPad}><Text style={s.scanTitle}>Apuntá la cámara a:</Text><View style={s.referenceRow}><PurposePhoto tiny/><Text style={s.meta}>← la referencia que guardaste</Text></View><CameraBox label="(lo que la cámara ve ahora)"/><Text style={s.searching}>Buscando...</Text><Pressable style={s.secondary} onPress={()=>nav('done')}><Text style={s.secondaryText}>No puedo ahora</Text></Pressable><Pressable style={[s.primary,{marginTop:12}]} onPress={()=>nav('done')}><Text style={s.primaryText}>Simular coincidencia</Text></Pressable></View></View>;
 }
 
-function Done({nav}) {
-  return <View style={[s.flex,s.donePad]}><View style={s.checkCircle}><Text style={s.check}>✓</Text></View><Text style={s.doneTitle}>Listo, despertaste</Text><Text style={s.doneName}>Remedios de mamá</Text><Divider/><Text style={s.streak}>Van 4 martes seguidos</Text><View style={{height:56}}/><Pressable style={s.secondary} onPress={()=>nav('alarms')}><Text style={s.secondaryText}>Cerrar</Text></Pressable></View>;
-}
-
 function SettingsModal({visible,onClose}) {
   const [notif,setNotif] = useState(true); const [privacy,setPrivacy]=useState(true);
   return <Modal transparent visible={visible} animationType="fade" onRequestClose={onClose}><Pressable style={s.modalBg} onPress={onClose}><Pressable style={s.modalCard} onPress={()=>{}}><Text style={s.modalTitle}>Ajustes (prototipo)</Text><View style={s.settingRow}><Text>Notificaciones</Text><Switch value={notif} onValueChange={setNotif}/></View><View style={s.settingRow}><Text>Recordatorio de privacidad</Text><Switch value={privacy} onValueChange={setPrivacy}/></View><Pressable style={s.secondary} onPress={onClose}><Text style={s.secondaryText}>Cerrar</Text></Pressable></Pressable></Pressable></Modal>;
@@ -121,6 +118,5 @@ const s = StyleSheet.create({
   cameraPad:{flex:1,padding:24},cameraPrompt:{textAlign:'center',color:C.g1,marginVertical:18},cameraBox:{height:360,borderWidth:1,borderStyle:'dashed',borderColor:C.g2,backgroundColor:C.g4,alignItems:'center',justifyContent:'center'},cameraActions:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',marginTop:24},shutter:{width:64,height:64,borderRadius:32,borderWidth:3,borderColor:C.ink,alignItems:'center',justifyContent:'center'},shutterInner:{width:50,height:50,borderRadius:25,backgroundColor:C.ink},
   centerPad:{alignItems:'center',paddingHorizontal:28,paddingTop:24},ringTime:{fontSize:34,fontWeight:'800'},metaCenter:{fontSize:13,color:C.g2,marginBottom:20},ringTitle:{fontSize:22,fontWeight:'800',marginVertical:22},primary:{minHeight:52,width:'100%',borderRadius:8,backgroundColor:C.ink,alignItems:'center',justifyContent:'center'},primaryText:{color:C.white,fontWeight:'800'},snooze:{color:C.g2,marginTop:22,padding:12},
   scanPad:{padding:28},scanTitle:{fontSize:18,fontWeight:'800',marginBottom:16},referenceRow:{flexDirection:'row',alignItems:'center',gap:14,marginBottom:22},searching:{textAlign:'center',color:C.g1,marginVertical:22},secondary:{minHeight:50,width:'100%',borderWidth:1,borderColor:C.ink,borderRadius:8,alignItems:'center',justifyContent:'center',backgroundColor:C.white},secondaryText:{fontWeight:'800',color:C.ink},
-  donePad:{alignItems:'center',padding:36,paddingTop:130},checkCircle:{width:88,height:88,borderWidth:2,borderColor:C.ink,borderRadius:44,alignItems:'center',justifyContent:'center'},check:{fontSize:48},doneTitle:{fontSize:24,fontWeight:'800',marginTop:22},doneName:{color:C.g1,marginTop:10},streak:{color:C.g1},
   modalBg:{flex:1,backgroundColor:'rgba(0,0,0,.35)',alignItems:'center',justifyContent:'center',padding:24},modalCard:{width:'100%',maxWidth:380,backgroundColor:C.white,borderRadius:14,padding:20},modalTitle:{fontSize:20,fontWeight:'800',marginBottom:20},settingRow:{minHeight:56,flexDirection:'row',justifyContent:'space-between',alignItems:'center',borderBottomWidth:1,borderColor:C.g3,marginBottom:12}
 });
