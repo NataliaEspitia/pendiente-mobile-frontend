@@ -6,6 +6,7 @@ import {
 import VerificationSelectorScreen from './screens/VerificationSelectorScreen';
 import AlarmRingingScreen from './screens/AlarmRingingScreen';
 import ConfirmationScreen from './screens/ConfirmationScreen';
+import ScanVerificationScreen from './screens/ScanVerificationScreen';
 
 const C = { ink: '#1a1a1a', g1: '#4d4d4d', g2: '#8c8c8c', g3: '#c9c9c9', g4: '#f0f0f0', white: '#ffffff' };
 const DAYS = ['L','M','M','J','V','S','D'];
@@ -32,7 +33,7 @@ export default function App() {
         {screen === 'camera' && <Camera nav={nav} onPhoto={() => { setHasPhoto(true); nav('new'); }} />}
         {screen === 'verify' && <VerificationSelectorScreen nav={nav} verification={verification} setVerification={setVerification} />}
         {screen === 'ringing' && <AlarmRingingScreen nav={nav} />}
-        {screen === 'scan' && <Scan nav={nav} />}
+        {screen === 'scan' && <ScanVerificationScreen nav={nav} />}
         {screen === 'done' && <ConfirmationScreen nav={nav} />}
       </View>
       <SettingsModal visible={settingsOpen} onClose={() => setSettingsOpen(false)} />
@@ -92,10 +93,6 @@ function Camera({nav,onPhoto}) {
     <Header left="×" title="Foto de propósito" onLeft={()=>nav('new')}/>
     <View style={s.cameraPad}><Text style={s.cameraPrompt}>Enfocá lo que tenés que recordar</Text><CameraBox label="(lo que la cámara ve)"/><View style={s.cameraActions}><Pressable onPress={onPhoto}><Text style={s.link}>Galería</Text></Pressable><Pressable style={s.shutter} onPress={onPhoto}><View style={s.shutterInner}/></Pressable><View style={{width:60}}/></View></View>
   </View>;
-}
-
-function Scan({nav}) {
-  return <View style={s.flex}><View style={s.scanPad}><Text style={s.scanTitle}>Apuntá la cámara a:</Text><View style={s.referenceRow}><PurposePhoto tiny/><Text style={s.meta}>← la referencia que guardaste</Text></View><CameraBox label="(lo que la cámara ve ahora)"/><Text style={s.searching}>Buscando...</Text><Pressable style={s.secondary} onPress={()=>nav('done')}><Text style={s.secondaryText}>No puedo ahora</Text></Pressable><Pressable style={[s.primary,{marginTop:12}]} onPress={()=>nav('done')}><Text style={s.primaryText}>Simular coincidencia</Text></Pressable></View></View>;
 }
 
 function SettingsModal({visible,onClose}) {
