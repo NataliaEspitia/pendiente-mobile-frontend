@@ -4,6 +4,7 @@ import {
   ScrollView, Modal, StatusBar
 } from 'react-native';
 import VerificationSelectorScreen from './screens/VerificationSelectorScreen';
+import AlarmRingingScreen from './screens/AlarmRingingScreen';
 
 const C = { ink: '#1a1a1a', g1: '#4d4d4d', g2: '#8c8c8c', g3: '#c9c9c9', g4: '#f0f0f0', white: '#ffffff' };
 const DAYS = ['L','M','M','J','V','S','D'];
@@ -29,7 +30,7 @@ export default function App() {
         {screen === 'new' && <AlarmEditor nav={nav} days={days} setDays={setDays} purpose={purpose} setPurpose={setPurpose} verification={verification} hasPhoto={hasPhoto} setHasPhoto={setHasPhoto} sound={sounds[soundIndex]} nextSound={() => setSoundIndex((soundIndex+1)%sounds.length)} />}
         {screen === 'camera' && <Camera nav={nav} onPhoto={() => { setHasPhoto(true); nav('new'); }} />}
         {screen === 'verify' && <VerificationSelectorScreen nav={nav} verification={verification} setVerification={setVerification} />}
-        {screen === 'ringing' && <Ringing nav={nav} />}
+        {screen === 'ringing' && <AlarmRingingScreen nav={nav} />}
         {screen === 'scan' && <Scan nav={nav} />}
         {screen === 'done' && <Done nav={nav} />}
       </View>
@@ -90,10 +91,6 @@ function Camera({nav,onPhoto}) {
     <Header left="×" title="Foto de propósito" onLeft={()=>nav('new')}/>
     <View style={s.cameraPad}><Text style={s.cameraPrompt}>Enfocá lo que tenés que recordar</Text><CameraBox label="(lo que la cámara ve)"/><View style={s.cameraActions}><Pressable onPress={onPhoto}><Text style={s.link}>Galería</Text></Pressable><Pressable style={s.shutter} onPress={onPhoto}><View style={s.shutterInner}/></Pressable><View style={{width:60}}/></View></View>
   </View>;
-}
-
-function Ringing({nav}) {
-  return <View style={[s.flex,s.centerPad]}><Text style={s.ringTime}>06:30</Text><Text style={s.metaCenter}>Martes</Text><PurposePhoto large/><Text style={s.ringTitle}>Remedios de mamá</Text><Pressable style={s.primary} onPress={()=>nav('scan')}><Text style={s.primaryText}>Descartar</Text></Pressable><Pressable onPress={()=>nav('alarms')}><Text style={s.snooze}>Posponer</Text></Pressable></View>;
 }
 
 function Scan({nav}) {
