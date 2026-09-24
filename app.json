@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "android": { "package": "com.pendiente.prototype" },
+    "android": { "package": "com.pendiente.prototype", "versionCode": 1 },
     "ios": { "bundleIdentifier": "com.pendiente.prototype" }
   }
 }
