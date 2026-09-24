@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Pendiente",
+    "slug": "pendiente-mobile-frontend",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "android": { "package": "com.pendiente.prototype" },
+    "ios": { "bundleIdentifier": "com.pendiente.prototype" }
+  }
+}
