@@ -26,7 +26,10 @@ import {
   fonts,
   statusBarInset,
   FRAME,
+  lineHeight,
+  textTop,
 } from './theme';
+import CameraView from './components/CameraView';
 
 const DAYS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
@@ -273,7 +276,7 @@ function AlarmList({
   };
 
   return (
-    <View style={s.flex}>
+    <View style={s.screen}>
       <Header
         title="Pendiente"
         right="Ajustes"
@@ -374,7 +377,7 @@ function AlarmEditor({
   };
 
   return (
-    <View style={s.flex}>
+    <View style={s.screen}>
       <Header
         left="Cancelar"
         title="Nueva alarma"
@@ -510,49 +513,48 @@ function Camera({
   nav,
   onPhoto,
 }) {
+  // Geometry from mockup m3 (frame 390x800), same approach as M5-M10.
   return (
-    <View style={s.flex}>
-      <Header
-        left="×"
-        title="Foto de propósito"
-        onLeft={() => nav('new')}
-      />
+    <View style={s.cameraScreen}>
+      <StatusBar barStyle="light-content" />
+      <View style={s.flex}>
+        <Pressable
+          style={({ pressed }) => [s.cameraClose, pressed && s.pressed]}
+          onPress={() => nav('new')}
+          hitSlop={12}
+          accessibilityRole="button"
+          accessibilityLabel="Cerrar"
+        >
+          <Text style={s.cameraCloseText}>×</Text>
+        </Pressable>
 
-      <View style={s.cameraPad}>
+        <Text style={s.cameraTitle}>Foto de propósito</Text>
+
         <Text style={s.cameraPrompt}>
           Enfoca lo que tienes que recordar
         </Text>
 
-        <CameraBox
-          label="(lo que la cámara ve)"
-        />
+        <View style={s.cameraViewWrap}>
+          <CameraView hint="(lo que la cámara ve)" height={430} />
+        </View>
 
-        <View style={s.cameraActions}>
-          <Pressable
-            style={({ pressed }) => [
-              s.galleryButton,
-              pressed && s.pressed,
-            ]}
-            onPress={onPhoto}
-          >
-            <Text style={s.link}>
-              Galería
-            </Text>
-          </Pressable>
+        <Pressable
+          style={({ pressed }) => [s.galleryButton, pressed && s.pressed]}
+          onPress={onPhoto}
+          accessibilityRole="button"
+        >
+          <Text style={s.galleryText}>Galería</Text>
+        </Pressable>
 
+        <View style={s.shutterRow} pointerEvents="box-none">
           <Pressable
-            style={({ pressed }) => [
-              s.shutter,
-              pressed && s.pressed,
-            ]}
+            style={({ pressed }) => [s.shutter, pressed && s.pressed]}
             onPress={onPhoto}
             accessibilityRole="button"
             accessibilityLabel="Tomar foto"
           >
             <View style={s.shutterInner} />
           </Pressable>
-
-          <View style={s.cameraSpacer} />
         </View>
       </View>
     </View>
@@ -640,18 +642,6 @@ function PurposePhoto({
   );
 }
 
-function CameraBox({
-  label,
-}) {
-  return (
-    <View style={s.cameraBox}>
-      <Text style={s.cameraBoxText}>
-        {label}
-      </Text>
-    </View>
-  );
-}
-
 /* -------------------------------------------------------------------------- */
 /* STYLES                                                                     */
 /* -------------------------------------------------------------------------- */
@@ -661,21 +651,24 @@ const s = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.bg,
     alignItems: 'center',
-
-    // SafeAreaView no agrega correctamente este espacio en Android.
-    // theme.js calcula StatusBar.currentHeight cuando corresponde.
-    paddingTop: statusBarInset,
   },
 
   phone: {
     flex: 1,
     width: '100%',
     maxWidth: FRAME.width,
-    backgroundColor: colors.white,
+    backgroundColor: colors.bg,
   },
 
   flex: {
     flex: 1,
+  },
+
+  // Each screen starts below the Android status bar, as M5-M10 do.
+  screen: {
+    flex: 1,
+    backgroundColor: colors.bg,
+    paddingTop: statusBarInset,
   },
 
   pressed: {
@@ -1011,68 +1004,94 @@ const s = StyleSheet.create({
 
   /* M3 ------------------------------------------------------------------- */
 
-  cameraPad: {
+  cameraScreen: {
     flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 18,
+    backgroundColor: colors.night,
+    paddingTop: statusBarInset,
+  },
+
+  cameraClose: {
+    position: 'absolute',
+    left: 22,
+    top: textTop(60, 20),
+  },
+
+  cameraCloseText: {
+    fontFamily: fonts.regular,
+    fontSize: 20,
+    lineHeight: lineHeight(20),
+    color: colors.white,
+  },
+
+  cameraTitle: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: textTop(60, 16),
+    textAlign: 'center',
+    fontFamily: fonts.bold,
+    fontSize: 16,
+    lineHeight: lineHeight(16),
+    color: colors.white,
   },
 
   cameraPrompt: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: textTop(106, 16),
     textAlign: 'center',
-    color: colors.ink,
     fontFamily: fonts.regular,
-    fontSize: 15,
-    marginBottom: 20,
+    fontSize: 16,
+    lineHeight: lineHeight(16),
+    color: colors.nightText,
   },
 
-  cameraBox: {
-    height: 360,
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    borderColor: colors.g2,
-    backgroundColor: colors.g4,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  cameraBoxText: {
-    color: colors.g1,
-    fontFamily: fonts.regular,
-    fontSize: 13,
-  },
-
-  cameraActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 24,
+  cameraViewWrap: {
+    position: 'absolute',
+    left: 32,
+    right: 32,
+    top: 130,
   },
 
   galleryButton: {
-    width: 60,
-    minHeight: 44,
-    justifyContent: 'center',
+    position: 'absolute',
+    left: 30,
+    width: 80,
+    top: textTop(630, 15),
+    alignItems: 'center',
   },
 
-  cameraSpacer: {
-    width: 60,
+  galleryText: {
+    fontFamily: fonts.regular,
+    fontSize: 15,
+    lineHeight: lineHeight(15),
+    color: colors.nightText,
+  },
+
+  shutterRow: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 640 - 35.5,
+    alignItems: 'center',
   },
 
   shutter: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: 71,
+    height: 71,
+    borderRadius: 35.5,
     borderWidth: 3,
-    borderColor: colors.prim,
+    borderColor: colors.white,
+    backgroundColor: colors.night,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.white,
   },
 
   shutterInner: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: colors.prim,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: colors.white,
   },
 });
