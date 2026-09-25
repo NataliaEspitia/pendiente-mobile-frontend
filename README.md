@@ -56,9 +56,9 @@ La primera vez, EAS pide crear el proyecto en tu cuenta de Expo y agrega `extra.
 
 ## Dispositivo de referencia (pixel-perfect)
 
-Los mockups se diseñaron sobre un marco de **390 x 800 dp**. Las pantallas se maquetaron con esa geometría: posiciones, tamaños, radios, grosores de borde y colores salen directamente del generador de mockups de la entrega de UI Design (Style Tile "La noche y el amanecer"). Para comparar con Figma, usa un dispositivo o emulador de 390 dp de ancho o cercano (un Pixel 7, de 412 x 915 dp, deja espacio para la barra de estado y la barra de navegación). Las pantallas M5 a M8 empiezan debajo de la barra de estado de Android. En pantallas más anchas o más angostas, los elementos conservan sus márgenes laterales y se estiran a lo ancho.
+Los mockups se diseñaron sobre un marco de **390 x 800 dp**. Las pantallas se maquetaron con esa geometría: posiciones, tamaños, radios, grosores de borde y colores salen directamente del generador de mockups de la entrega de UI Design (Style Tile "La noche y el amanecer"). Para comparar con Figma, usa un dispositivo o emulador de 390 dp de ancho o cercano (un Pixel 7, de 412 x 915 dp, deja espacio para la barra de estado y la barra de navegación). Las pantallas M5 a M10 empiezan debajo de la barra de estado de Android. En pantallas más anchas o más angostas, los elementos conservan sus márgenes laterales y se estiran a lo ancho.
 
-La tipografía del Figma es **Inter**. La app carga Inter empaquetada localmente en `assets/fonts/` (Regular y Bold, licencia SIL Open Font License en `assets/fonts/OFL.txt`) con `expo-font`, así que no necesita conexión para mostrarla. Las pantallas M5 a M8 usan Inter con los mismos tamaños y pesos del Figma; cada peso tiene su propia familia (`Inter-Regular`, `Inter-Bold`) porque Android no elige la variante negrita de una fuente personalizada a partir de `fontWeight`.
+La tipografía del Figma es **Inter**. La app carga Inter empaquetada localmente en `assets/fonts/` (Regular y Bold, licencia SIL Open Font License en `assets/fonts/OFL.txt`) con `expo-font`, así que no necesita conexión para mostrarla. Las pantallas M5 a M10 usan Inter con los mismos tamaños y pesos del Figma; cada peso tiene su propia familia (`Inter-Regular`, `Inter-Bold`) porque Android no elige la variante negrita de una fuente personalizada a partir de `fontWeight`.
 
 ## Pantallas
 
@@ -70,23 +70,27 @@ La tipografía del Figma es **Inter**. La app carga Inter empaquetada localmente
 - **M6 Alarma sonando:** foto de propósito protagonista, Descartar y Posponer.
 - **M7 Verificación por escaneo:** referencia guardada, visor simulado, Buscando y No puedo ahora.
 - **M8 Confirmación:** "Listo, despertaste" y racha de martes.
+- **M9 Ajustes:** Sonido y volumen, Notificaciones, Privacidad y datos de la cámara, Copia de seguridad y Acerca de Pendiente.
+- **M10 Sonido de la alarma:** Radar, Amanecer, Clásico y Suave, con control de volumen.
 
 ## Navegación
 
-- M1: el botón flotante o una fila abre M2/M4. Ajustes abre un modal.
-- M4: la fila Verificación abre M5. El botón "Ver flujo de alarma sonando" abre M6.
+- M1: el botón flotante o una fila abre M2/M4. Ajustes abre M9.
+- M4: la fila Verificación abre M5. La fila Sonido abre M10. El botón "Ver flujo de alarma sonando" abre M6.
 - M5: la flecha o cualquier opción vuelve a M4 con la opción elegida.
 - M6: Descartar abre M7. Posponer vuelve a M1.
 - M7: tocar el visor simula que se reconoce el objeto y abre M8. "No puedo ahora" también abre M8.
 - M8: Cerrar vuelve a M1.
+- M9: la flecha vuelve a M1. Sonido y volumen abre M10.
+- M10: elegir un sonido lo marca como seleccionado y el control de volumen responde al toque. La flecha vuelve a la pantalla de origen (M4 o M9) con el sonido elegido.
 
 ## Estructura
 
 ```
 App.js                 Estado de navegación y pantallas M1 a M4
-theme.js               Tokens de color y utilidades de maquetación (M5 a M8)
+theme.js               Tokens de color y utilidades de maquetación (M5 a M10)
 components/            PhotoPills (foto de propósito) y CameraView (visor simulado)
-screens/               M5 a M8, una pantalla por archivo
+screens/               M5 a M10, una pantalla por archivo
 ```
 
 ## Referencia de diseño
@@ -97,6 +101,6 @@ https://www.figma.com/proto/iYEIPtxf5rfIvabAcStQ4B/Pendiente-%E2%80%94-Wireframe
 ## Distribución del trabajo
 
 - **Natalia:** M1 Mis alarmas, M2 Nueva alarma, M3 Foto de propósito y M4 Nueva alarma con foto (`App.js`).
-- **Santiago:** M5 Selector de verificación, M6 Alarma sonando, M7 Verificación por escaneo y M8 Confirmación (`screens/`, `components/`, `theme.js`).
+- **Santiago:** M5 Selector de verificación, M6 Alarma sonando, M7 Verificación por escaneo, M8 Confirmación, M9 Ajustes y M10 Sonido de la alarma (`screens/`, `components/`, `theme.js`).
 
 La descripción detallada de los issues está en [`ISSUES.md`](ISSUES.md).

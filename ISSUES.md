@@ -1,6 +1,6 @@
 # Distribución de pantallas: Mobile
 
-La entrega mobile se divide en ocho issues, uno por pantalla del wireframe.
+La entrega mobile se divide en diez issues, uno por pantalla del wireframe.
 
 ## Natalia
 
@@ -61,6 +61,22 @@ La entrega mobile se divide en ocho issues, uno por pantalla del wireframe.
 - Nombre de alarma.
 - Racha de 4 martes.
 - Botón Cerrar.
+
+### M9: Ajustes
+- Sonido y volumen (abre M10).
+- Notificaciones.
+- Privacidad y datos de la cámara.
+- Copia de seguridad.
+- Acerca de Pendiente.
+- Se abre desde Ajustes en M1 y la flecha vuelve a M1.
+
+### M10: Sonido de la alarma
+- Radar.
+- Amanecer.
+- Clásico.
+- Suave.
+- Control de volumen.
+- Selección interactiva: el sonido elegido se muestra en M4 al volver.
 
 ## Criterios comunes
 - La pantalla debe corresponder al wireframe.
