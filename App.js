@@ -8,6 +8,7 @@ import AlarmRingingScreen from './screens/AlarmRingingScreen';
 import ConfirmationScreen from './screens/ConfirmationScreen';
 import ScanVerificationScreen from './screens/ScanVerificationScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import SoundPickerScreen from './screens/SoundPickerScreen';
 import { useFonts } from 'expo-font';
 import { fontFiles } from './theme';
 
@@ -24,6 +25,8 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [alarmToggles, setAlarmToggles] = useState([true,true,false]);
   const sounds = ['Radar','Campanas','Pulso'];
+  const [sound, setSound] = useState('Radar');
+  const [soundBack, setSoundBack] = useState('new');
   const [fontsLoaded, fontError] = useFonts(fontFiles);
 
   const nav = (next) => setScreen(next);
@@ -34,13 +37,14 @@ export default function App() {
       <StatusBar barStyle="dark-content" />
       <View style={s.phone}>
         {screen === 'alarms' && <AlarmList nav={nav} toggles={alarmToggles} setToggles={setAlarmToggles} openSettings={() => nav('settings')} />}
-        {screen === 'new' && <AlarmEditor nav={nav} days={days} setDays={setDays} purpose={purpose} setPurpose={setPurpose} verification={verification} hasPhoto={hasPhoto} setHasPhoto={setHasPhoto} sound={sounds[soundIndex]} nextSound={() => setSoundIndex((soundIndex+1)%sounds.length)} />}
+        {screen === 'new' && <AlarmEditor nav={nav} days={days} setDays={setDays} purpose={purpose} setPurpose={setPurpose} verification={verification} hasPhoto={hasPhoto} setHasPhoto={setHasPhoto} sound={sound} nextSound={() => { setSoundBack('new'); nav('sound'); }} />}
         {screen === 'camera' && <Camera nav={nav} onPhoto={() => { setHasPhoto(true); nav('new'); }} />}
         {screen === 'verify' && <VerificationSelectorScreen nav={nav} verification={verification} setVerification={setVerification} />}
         {screen === 'ringing' && <AlarmRingingScreen nav={nav} />}
         {screen === 'scan' && <ScanVerificationScreen nav={nav} />}
         {screen === 'done' && <ConfirmationScreen nav={nav} />}
-        {screen === 'settings' && <SettingsScreen nav={nav} />}
+        {screen === 'settings' && <SettingsScreen nav={nav} sound={sound} openSound={() => { setSoundBack('settings'); nav('sound'); }} />}
+        {screen === 'sound' && <SoundPickerScreen nav={nav} back={soundBack} sound={sound} setSound={setSound} />}
       </View>
       <SettingsModal visible={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </SafeAreaView>
