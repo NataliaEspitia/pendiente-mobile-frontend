@@ -52,7 +52,7 @@ npx eas-cli build -p android --profile preview
 
 La primera vez, EAS pide crear el proyecto en tu cuenta de Expo y agrega `extra.eas.projectId` a `app.json`. Al terminar, EAS muestra un enlace para descargar la APK.
 
-**Enlace de descarga de la APK:** _pendiente (se agrega al generar el build)_
+**Enlace de descarga de la APK:** https://drive.google.com/file/d/1kUW_2y0mvv3J_4jo7nLPR5UvadPZhYuE/view?usp=sharing
 
 ## Dispositivo de referencia (pixel-perfect)
 
