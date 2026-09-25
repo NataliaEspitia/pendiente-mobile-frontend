@@ -21,7 +21,7 @@ La entrega mobile se divide en diez issues, uno por pantalla del wireframe.
 
 ### M3: Foto de propósito
 - Visor de cámara simulado.
-- Mensaje `Enfocá lo que tenés que recordar`.
+- Mensaje `Enfoca lo que tienes que recordar`.
 - Galería/disparador demostrativos.
 - Salida con `×`.
 

@@ -100,7 +100,7 @@ https://www.figma.com/proto/iYEIPtxf5rfIvabAcStQ4B/Pendiente-%E2%80%94-Wireframe
 
 ## Distribución del trabajo
 
-- **Natalia:** M1 Mis alarmas, M2 Nueva alarma, M3 Foto de propósito y M4 Nueva alarma con foto (`App.js`).
+- **Natalia:** M1 Mis alarmas, M2 Nueva alarma, M3 Foto de propósito y M4 Nueva alarma con foto (`App.js`). Los ajustes pixel-perfect de estas pantallas frente al Figma los hizo Santiago en trabajo en pareja con Natalia.
 - **Santiago:** M5 Selector de verificación, M6 Alarma sonando, M7 Verificación por escaneo, M8 Confirmación, M9 Ajustes y M10 Sonido de la alarma (`screens/`, `components/`, `theme.js`).
 
 La descripción detallada de los issues está en [`ISSUES.md`](ISSUES.md).
