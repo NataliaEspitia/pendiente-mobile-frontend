@@ -7,6 +7,7 @@ import VerificationSelectorScreen from './screens/VerificationSelectorScreen';
 import AlarmRingingScreen from './screens/AlarmRingingScreen';
 import ConfirmationScreen from './screens/ConfirmationScreen';
 import ScanVerificationScreen from './screens/ScanVerificationScreen';
+import SettingsScreen from './screens/SettingsScreen';
 import { useFonts } from 'expo-font';
 import { fontFiles } from './theme';
 
@@ -32,13 +33,14 @@ export default function App() {
     <SafeAreaView style={s.safe}>
       <StatusBar barStyle="dark-content" />
       <View style={s.phone}>
-        {screen === 'alarms' && <AlarmList nav={nav} toggles={alarmToggles} setToggles={setAlarmToggles} openSettings={() => setSettingsOpen(true)} />}
+        {screen === 'alarms' && <AlarmList nav={nav} toggles={alarmToggles} setToggles={setAlarmToggles} openSettings={() => nav('settings')} />}
         {screen === 'new' && <AlarmEditor nav={nav} days={days} setDays={setDays} purpose={purpose} setPurpose={setPurpose} verification={verification} hasPhoto={hasPhoto} setHasPhoto={setHasPhoto} sound={sounds[soundIndex]} nextSound={() => setSoundIndex((soundIndex+1)%sounds.length)} />}
         {screen === 'camera' && <Camera nav={nav} onPhoto={() => { setHasPhoto(true); nav('new'); }} />}
         {screen === 'verify' && <VerificationSelectorScreen nav={nav} verification={verification} setVerification={setVerification} />}
         {screen === 'ringing' && <AlarmRingingScreen nav={nav} />}
         {screen === 'scan' && <ScanVerificationScreen nav={nav} />}
         {screen === 'done' && <ConfirmationScreen nav={nav} />}
+        {screen === 'settings' && <SettingsScreen nav={nav} />}
       </View>
       <SettingsModal visible={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </SafeAreaView>
