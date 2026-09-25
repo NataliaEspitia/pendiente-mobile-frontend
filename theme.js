@@ -8,6 +8,7 @@ export const colors = {
   night: '#141B33',
   accent: '#F5A623',
   accentLight: '#FDF3DF',
+  accentInk: '#9C6B0F',
   ok: '#2E8B62',
   okLight: '#E7F3EC',
   g1: '#4A5568',

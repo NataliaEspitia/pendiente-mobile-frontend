@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   Pressable,
-  Switch,
   TextInput,
   ScrollView,
   StatusBar,
@@ -281,62 +280,77 @@ function AlarmList({
     );
   };
 
+  // Geometry from m1 and m_row_alarm in gen_mockups.py (frame 390x800).
   return (
     <View style={s.screen}>
-      <Header
-        title="Pendiente"
-        right="Ajustes"
-        onRight={openSettings}
-      />
+      <View style={s.listHeader}>
+        <Text style={s.listTitle}>
+          Pendiente
+        </Text>
+
+        <Pressable
+          style={({ pressed }) => [s.listSettings, pressed && s.pressed]}
+          onPress={openSettings}
+          hitSlop={12}
+          accessibilityRole="button"
+        >
+          <Text style={s.listSettingsText}>
+            Ajustes
+          </Text>
+        </Pressable>
+      </View>
 
       <ScrollView
         contentContainerStyle={s.listPad}
         showsVerticalScrollIndicator={false}
       >
-        {alarms.map((alarm, index) => (
-          <Pressable
-            key={`${alarm.time}-${alarm.name}`}
-            style={({ pressed }) => [
-              s.alarmRow,
-              pressed && s.pressed,
-            ]}
-            onPress={() => openAlarm(alarm)}
-          >
-            <View style={s.alarmContent}>
-              <View style={s.timeLine}>
-                <Text style={s.listTime}>
-                  {alarm.time}
-                </Text>
+        {alarms.map((alarm, index) => {
+          const on = toggles[index];
 
-                {alarm.photo && (
-                  <Text style={s.badge}>
+          return (
+            <Pressable
+              key={`${alarm.time}-${alarm.name}`}
+              style={({ pressed }) => [
+                s.alarmRow,
+                pressed && s.pressed,
+              ]}
+              onPress={() => openAlarm(alarm)}
+            >
+              <Text style={[s.listTime, !on && s.textOff]}>
+                {alarm.time}
+              </Text>
+
+              {alarm.photo && (
+                <View style={s.badge}>
+                  <Text style={s.badgeText}>
                     FOTO
                   </Text>
-                )}
-              </View>
+                </View>
+              )}
 
-              <Text style={s.name}>
+              <Text style={[s.name, !on && s.textOff]}>
                 {alarm.name}
               </Text>
 
               <Text style={s.meta}>
                 {alarm.repeat}
               </Text>
-            </View>
 
-            <Switch
-              value={toggles[index]}
-              onValueChange={(value) =>
-                toggleAlarm(index, value)
-              }
-              trackColor={{
-                false: colors.g3,
-                true: colors.prim,
-              }}
-              thumbColor={colors.white}
-            />
-          </Pressable>
-        ))}
+              <Pressable
+                style={[s.switchTrack, on && s.switchTrackOn]}
+                onPress={() => toggleAlarm(index, !on)}
+                hitSlop={10}
+                accessibilityRole="switch"
+                accessibilityState={{ checked: on }}
+                accessibilityLabel={`Alarma ${alarm.time}`}
+              >
+                <View style={[s.switchThumb, on && s.switchThumbOn]} />
+              </Pressable>
+
+              <View style={s.alarmLine} />
+            </Pressable>
+          );
+        })}
       </ScrollView>
 
       <Pressable
@@ -349,7 +363,7 @@ function AlarmList({
         accessibilityLabel="Nueva alarma"
       >
         <Text style={s.fabText}>
-          ＋
+          +
         </Text>
       </Pressable>
     </View>
@@ -692,91 +706,156 @@ const s = StyleSheet.create({
 
   /* M1 ------------------------------------------------------------------- */
 
+  listHeader: {
+    height: 79,
+    marginHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.g3,
+  },
+
+  listTitle: {
+    position: 'absolute',
+    left: 8,
+    top: textTop(62, 21),
+    fontFamily: fonts.bold,
+    fontSize: 21,
+    lineHeight: lineHeight(21),
+    color: colors.prim,
+  },
+
+  listSettings: {
+    position: 'absolute',
+    right: 8,
+    top: textTop(62, 14),
+  },
+
+  listSettingsText: {
+    fontFamily: fonts.regular,
+    fontSize: 14,
+    lineHeight: lineHeight(14),
+    color: colors.prim,
+  },
+
   listPad: {
-    paddingHorizontal: 18,
-    paddingBottom: 110,
+    paddingTop: 7,
+    paddingBottom: 120,
   },
 
   alarmRow: {
-    minHeight: 96,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.g3,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-
-  alarmContent: {
-    flex: 1,
-  },
-
-  timeLine: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+    height: 100,
   },
 
   listTime: {
-    fontSize: 28,
+    position: 'absolute',
+    left: 24,
+    top: textTop(34, 30),
+    fontSize: 30,
+    lineHeight: lineHeight(30),
     fontFamily: fonts.bold,
     color: colors.ink,
   },
 
+  textOff: {
+    color: colors.g2,
+  },
+
   badge: {
-    fontSize: 10,
-    fontFamily: fonts.regular,
-    color: colors.photoInk,
+    position: 'absolute',
+    left: 24 + 5 * 17 + 14,
+    top: 14,
+    width: 44,
+    height: 18,
     borderWidth: 1,
     borderColor: colors.accent,
     borderRadius: 3,
-    paddingHorizontal: 5,
-    paddingVertical: 2,
     backgroundColor: colors.accentLight,
-    letterSpacing: 0.6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  badgeText: {
+    fontSize: 10,
+    lineHeight: lineHeight(10),
+    fontFamily: fonts.regular,
+    color: colors.accentInk,
+    letterSpacing: 1,
   },
 
   name: {
-    marginTop: 3,
+    position: 'absolute',
+    left: 24,
+    top: textTop(58, 15),
     fontSize: 15,
+    lineHeight: lineHeight(15),
     fontFamily: fonts.regular,
-    color: colors.ink,
+    color: colors.g1,
   },
 
   meta: {
+    position: 'absolute',
+    left: 24,
+    top: textTop(79, 12),
     fontSize: 12,
+    lineHeight: lineHeight(12),
     fontFamily: fonts.regular,
     color: colors.g2,
-    marginTop: 4,
+  },
+
+  switchTrack: {
+    position: 'absolute',
+    right: 28,
+    top: 22,
+    width: 46,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: colors.g3,
+  },
+
+  switchTrackOn: {
+    backgroundColor: colors.prim,
+  },
+
+  switchThumb: {
+    position: 'absolute',
+    left: 3,
+    top: 3,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: colors.white,
+  },
+
+  switchThumbOn: {
+    left: 23,
+  },
+
+  alarmLine: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
+    top: 96,
+    height: 1,
+    backgroundColor: colors.g3,
   },
 
   fab: {
     position: 'absolute',
-    right: 22,
-    bottom: 24,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    right: 32,
+    bottom: 38,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     backgroundColor: colors.prim,
     alignItems: 'center',
     justifyContent: 'center',
-
-    shadowColor: colors.ink,
-    shadowOpacity: 0.18,
-    shadowRadius: 6,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-
-    elevation: 4,
+    boxShadow: '0px 3px 6px rgba(28, 34, 51, 0.18)',
   },
 
   fabText: {
     fontSize: 34,
-    lineHeight: 38,
+    lineHeight: lineHeight(34),
     color: colors.white,
     fontFamily: fonts.regular,
-    marginTop: -3,
   },
 
   /* M2 / M4 (geometry from m_form in gen_mockups.py) --------------------- */
