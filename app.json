@@ -5,8 +5,21 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "android": { "package": "com.pendiente.prototype", "versionCode": 1 },
-    "ios": { "bundleIdentifier": "com.pendiente.prototype" },
-    "plugins": ["expo-font"]
+    "android": {
+      "package": "com.pendiente.prototype",
+      "versionCode": 1
+    },
+    "ios": {
+      "bundleIdentifier": "com.pendiente.prototype"
+    },
+    "plugins": [
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f32e1ee7-acb8-40a2-b80e-260e6c19a323"
+      }
+    },
+    "owner": "sanmofe"
   }
 }
