@@ -30,6 +30,7 @@ import {
   textTop,
 } from './theme';
 import CameraView from './components/CameraView';
+import PhotoPills from './components/PhotoPills';
 
 const DAYS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
@@ -204,7 +205,12 @@ function Header({
         style={s.headerSide}
         onPress={onLeft}
       >
-        <Text style={s.headerAction}>
+        <Text
+          style={[
+            s.headerAction,
+            left === 'Cancelar' && s.headerActionMuted,
+          ]}
+        >
           {left || ''}
         </Text>
       </Pressable>
@@ -394,9 +400,10 @@ function AlarmEditor({
           06 : 30
         </Text>
 
-        <Text style={s.arrows}>
-          ▲ ▼       ▲ ▼
-        </Text>
+        <View style={s.arrowsRow}>
+          <Text style={[s.arrows, s.arrowsHours]}>▲ ▼</Text>
+          <Text style={[s.arrows, s.arrowsMinutes]}>▲ ▼</Text>
+        </View>
 
         <Divider />
 
@@ -443,7 +450,7 @@ function AlarmEditor({
 
         {hasPhoto ? (
           <View style={s.photoRow}>
-            <PurposePhoto small />
+            <PhotoPills width={180} height={120} />
 
             <Pressable
               style={({ pressed }) => [
@@ -452,7 +459,7 @@ function AlarmEditor({
               ]}
               onPress={() => setHasPhoto(false)}
             >
-              <Text style={s.link}>
+              <Text style={s.removePhotoText}>
                 × Quitar
               </Text>
             </Pressable>
@@ -490,6 +497,7 @@ function AlarmEditor({
         <Divider />
 
         <Pressable
+          hitSlop={8}
           style={({ pressed }) => [
             s.demoButton,
             pressed && s.pressed,
@@ -588,57 +596,16 @@ function Row({
         {label}
       </Text>
 
-      <Text style={s.rowValue}>
-        {value}  ›
-      </Text>
+      <View style={s.rowRight}>
+        <Text style={s.rowValue}>
+          {value}
+        </Text>
+
+        <Text style={s.rowChevron}>
+          &gt;
+        </Text>
+      </View>
     </Pressable>
-  );
-}
-
-function PurposePhoto({
-  small,
-  large,
-  tiny,
-}) {
-  const width = tiny
-    ? 70
-    : small
-      ? 160
-      : large
-        ? 300
-        : 160;
-
-  const height = tiny
-    ? 70
-    : small
-      ? 105
-      : large
-        ? 300
-        : 105;
-
-  const text = large
-    ? 'los remedios'
-    : tiny
-      ? 'tu foto'
-      : 'los remedios';
-
-  return (
-    <View
-      style={[
-        s.photo,
-        {
-          width,
-          height,
-        },
-      ]}
-    >
-      <View style={s.photoDiagonalOne} />
-      <View style={s.photoDiagonalTwo} />
-
-      <Text style={s.photoText}>
-        {text}
-      </Text>
-    </View>
   );
 }
 
@@ -678,13 +645,14 @@ const s = StyleSheet.create({
   /* Header --------------------------------------------------------------- */
 
   header: {
-    height: 58,
+    height: 57,
+    paddingTop: 8,
+    marginHorizontal: 16,
+    paddingHorizontal: 4,
     borderBottomWidth: 1,
     borderBottomColor: colors.g3,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    backgroundColor: colors.white,
   },
 
   headerSide: {
@@ -702,6 +670,7 @@ const s = StyleSheet.create({
     textAlign: 'center',
     fontFamily: fonts.bold,
     fontSize: 16,
+    lineHeight: lineHeight(16),
     color: colors.ink,
   },
 
@@ -709,6 +678,11 @@ const s = StyleSheet.create({
     fontFamily: fonts.regular,
     color: colors.prim,
     fontSize: 14,
+    lineHeight: lineHeight(14),
+  },
+
+  headerActionMuted: {
+    color: colors.g1,
   },
 
   headerActionBold: {
@@ -805,53 +779,73 @@ const s = StyleSheet.create({
     marginTop: -3,
   },
 
-  /* M2 / M4 -------------------------------------------------------------- */
+  /* M2 / M4 (geometry from m_form in gen_mockups.py) --------------------- */
 
   formPad: {
-    paddingHorizontal: 18,
-    paddingBottom: 40,
+    paddingHorizontal: 16,
+    paddingBottom: 32,
   },
 
   bigTime: {
     fontSize: 62,
-    lineHeight: 68,
+    lineHeight: lineHeight(62),
     fontFamily: fonts.bold,
     textAlign: 'center',
-    marginTop: 24,
+    marginTop: 31,
     color: colors.ink,
   },
 
+  arrowsRow: {
+    height: lineHeight(13),
+    marginTop: 5,
+    marginBottom: 22,
+  },
+
   arrows: {
+    position: 'absolute',
+    left: '50%',
+    width: 60,
     textAlign: 'center',
     fontFamily: fonts.regular,
-    color: colors.g2,
-    fontSize: 11,
-    letterSpacing: 3,
-    marginBottom: 14,
+    color: colors.prim,
+    fontSize: 13,
+    lineHeight: lineHeight(13),
+  },
+
+  arrowsHours: {
+    marginLeft: -62 - 30,
+  },
+
+  arrowsMinutes: {
+    marginLeft: 42 - 30,
   },
 
   divider: {
     height: 1,
     backgroundColor: colors.g3,
-    marginVertical: 16,
   },
 
   label: {
     fontSize: 14,
+    lineHeight: lineHeight(14),
     fontFamily: fonts.regular,
     color: colors.g1,
-    marginBottom: 10,
+    marginTop: 15,
+    marginLeft: 8,
   },
 
   days: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginHorizontal: 13,
+    marginTop: 14,
+    marginBottom: 16,
   },
 
   day: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     borderWidth: 1.5,
     borderColor: colors.g2,
     backgroundColor: colors.white,
@@ -866,108 +860,72 @@ const s = StyleSheet.create({
 
   dayText: {
     color: colors.g1,
-    fontFamily: fonts.regular,
-    fontSize: 14,
+    fontFamily: fonts.bold,
+    fontSize: 13,
+    lineHeight: lineHeight(13),
   },
 
   dayTextOn: {
     color: colors.white,
-    fontFamily: fonts.bold,
   },
 
   input: {
-    height: 44,
+    height: 26,
+    marginTop: 9,
+    marginHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: colors.g1,
+    borderBottomColor: colors.g2,
     fontSize: 16,
     fontFamily: fonts.regular,
     color: colors.ink,
     paddingHorizontal: 0,
+    paddingVertical: 0,
   },
 
   photoRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    gap: 14,
-    marginTop: 18,
+    gap: 16,
+    marginTop: 23,
+    marginLeft: 8,
+    marginBottom: 28,
   },
 
   removePhoto: {
-    minHeight: 44,
-    justifyContent: 'center',
+    marginTop: -1,
   },
 
-  photo: {
-    overflow: 'hidden',
-    position: 'relative',
-    backgroundColor: colors.photoBg,
-    borderWidth: 1,
-    borderColor: colors.photoLine,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  photoDiagonalOne: {
-    position: 'absolute',
-    width: '140%',
-    height: 1,
-    backgroundColor: colors.photoLine,
-    transform: [
-      {
-        rotate: '33deg',
-      },
-    ],
-  },
-
-  photoDiagonalTwo: {
-    position: 'absolute',
-    width: '140%',
-    height: 1,
-    backgroundColor: colors.photoLine,
-    transform: [
-      {
-        rotate: '-33deg',
-      },
-    ],
-  },
-
-  photoText: {
-    zIndex: 2,
-    backgroundColor: colors.white,
-    color: colors.photoInk,
+  removePhotoText: {
+    color: colors.g1,
+    fontSize: 13,
+    lineHeight: lineHeight(13),
     fontFamily: fonts.regular,
-    fontSize: 11,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-  },
-
-  link: {
-    color: colors.prim,
-    fontSize: 14,
-    fontFamily: fonts.regular,
-    paddingVertical: 10,
   },
 
   addPhoto: {
-    height: 105,
+    height: 96,
+    marginTop: 23,
+    marginHorizontal: 8,
+    marginBottom: 28,
     backgroundColor: colors.g4,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderStyle: 'dashed',
-    borderColor: colors.g2,
-    borderRadius: 4,
+    borderColor: colors.prim,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 18,
   },
 
   addPhotoText: {
     color: colors.prim,
     fontSize: 14,
-    fontFamily: fonts.regular,
+    lineHeight: lineHeight(14),
+    fontFamily: fonts.bold,
   },
 
   row: {
-    minHeight: 48,
+    height: 49,
+    paddingHorizontal: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -977,29 +935,44 @@ const s = StyleSheet.create({
     color: colors.ink,
     fontFamily: fonts.regular,
     fontSize: 15,
+    lineHeight: lineHeight(15),
+  },
+
+  rowRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   rowValue: {
     color: colors.g1,
     fontFamily: fonts.regular,
-    fontSize: 15,
+    fontSize: 14,
+    lineHeight: lineHeight(14),
   },
 
+  rowChevron: {
+    width: 20,
+    textAlign: 'right',
+    color: colors.g2,
+    fontFamily: fonts.regular,
+    fontSize: 15,
+    lineHeight: lineHeight(15),
+  },
+
+  // Demo shortcut to reach M6; not in the mockup, so it stays quiet.
   demoButton: {
-    marginTop: 24,
-    minHeight: 46,
-    borderWidth: 1.5,
-    borderColor: colors.prim,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.white,
+    marginTop: 20,
+    alignSelf: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
 
   demoButtonText: {
-    color: colors.prim,
-    fontFamily: fonts.bold,
-    fontSize: 14,
+    color: colors.g2,
+    fontFamily: fonts.regular,
+    fontSize: 13,
+    lineHeight: lineHeight(13),
+    textDecorationLine: 'underline',
   },
 
   /* M3 ------------------------------------------------------------------- */
