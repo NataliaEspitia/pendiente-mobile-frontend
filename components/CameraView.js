@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { colors, lineHeight } from '../theme';
+import { colors, fonts, lineHeight } from '../theme';
 
 // Simulated camera viewfinder (night background with framing corners), as camera_view() in gen_mockups.py.
 const INSET = 26;
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     textAlign: 'center',
+    fontFamily: fonts.regular,
     fontSize: 13,
     lineHeight: lineHeight(13),
     color: colors.nightMuted,

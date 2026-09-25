@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { colors, statusBarInset, lineHeight, textTop, pressedFeedback } from '../theme';
+import { colors, fonts, statusBarInset, lineHeight, textTop, pressedFeedback } from '../theme';
 
 // M5 Selector de verificación. Geometry from mockup m5 (frame 390x800).
 const OPTIONS = [
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 14,
     top: textTop(40, 20) - 12,
+    fontFamily: fonts.regular,
     fontSize: 20,
     lineHeight: lineHeight(20),
     color: colors.prim,
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     top: textTop(40, 16),
     fontSize: 16,
     lineHeight: lineHeight(16),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.ink,
     textAlign: 'center',
   },
@@ -118,15 +119,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 42,
     top: textTop(14 + 14, 16),
+    fontFamily: fonts.regular,
     fontSize: 16,
     lineHeight: lineHeight(16),
     color: colors.ink,
   },
-  labelSelected: { fontWeight: '700', color: colors.prim },
+  labelSelected: { fontFamily: fonts.bold, color: colors.prim },
   desc: {
     position: 'absolute',
     left: 42,
     top: textTop(14 + 36, 12.5),
+    fontFamily: fonts.regular,
     fontSize: 12.5,
     lineHeight: lineHeight(12.5),
     color: colors.g2,
@@ -148,12 +151,13 @@ const styles = StyleSheet.create({
     top: textTop(28, 13) - 1,
     fontSize: 13,
     lineHeight: lineHeight(13),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.prim,
   },
   privacyText: {
     position: 'absolute',
     left: 15,
+    fontFamily: fonts.regular,
     fontSize: 12.5,
     lineHeight: lineHeight(12.5),
     color: colors.g1,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { colors, lineHeight } from '../theme';
+import { colors, fonts, lineHeight } from '../theme';
 
 // Purpose photo drawn with views (pill box of the user's mom), as photo_pills() in gen_mockups.py.
 const OUTER_BORDER = 1.5;
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     textAlign: 'center',
+    fontFamily: fonts.regular,
     color: colors.photoInk,
   },
   box: {
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     textAlign: 'center',
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.photoInk,
   },
   dotRow: { position: 'absolute', left: 0, right: 0, alignItems: 'center' },

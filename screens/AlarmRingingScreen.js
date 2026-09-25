@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet, StatusBar } from 'react-native';
 import PhotoPills from '../components/PhotoPills';
-import { colors, statusBarInset, lineHeight, textTop, pressedFeedback } from '../theme';
+import { colors, fonts, statusBarInset, lineHeight, textTop, pressedFeedback } from '../theme';
 
 // M6 Alarma sonando. Geometry from mockup m6 (frame 390x800).
 export default function AlarmRingingScreen({ nav }) {
@@ -42,12 +42,13 @@ const styles = StyleSheet.create({
     top: textTop(60, 30),
     fontSize: 30,
     lineHeight: lineHeight(30),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.white,
   },
   day: {
     ...centered,
     top: textTop(86, 15),
+    fontFamily: fonts.regular,
     fontSize: 15,
     lineHeight: lineHeight(15),
     color: colors.nightMuted,
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     top: textTop(560, 22),
     fontSize: 22,
     lineHeight: lineHeight(22),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.white,
   },
   dismiss: {
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  dismissText: { fontSize: 18, lineHeight: lineHeight(18), fontWeight: '700', color: colors.ink },
+  dismissText: { fontSize: 18, lineHeight: lineHeight(18), fontFamily: fonts.bold, color: colors.ink },
   snooze: {
     position: 'absolute',
     left: '50%',
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
   },
   snoozeText: {
     marginTop: textTop(720, 14) - 696,
+    fontFamily: fonts.regular,
     fontSize: 14,
     lineHeight: lineHeight(14),
     color: colors.nightMuted,

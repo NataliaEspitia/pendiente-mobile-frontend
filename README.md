@@ -58,7 +58,7 @@ La primera vez, EAS pide crear el proyecto en tu cuenta de Expo y agrega `extra.
 
 Los mockups se diseñaron sobre un marco de **390 x 800 dp**. Las pantallas se maquetaron con esa geometría: posiciones, tamaños, radios, grosores de borde y colores salen directamente del generador de mockups de la entrega de UI Design (Style Tile "La noche y el amanecer"). Para comparar con Figma, usa un dispositivo o emulador de 390 dp de ancho o cercano (un Pixel 7, de 412 x 915 dp, deja espacio para la barra de estado y la barra de navegación). Las pantallas M5 a M8 empiezan debajo de la barra de estado de Android. En pantallas más anchas o más angostas, los elementos conservan sus márgenes laterales y se estiran a lo ancho.
 
-La tipografía de los mockups es la sans serif del sistema (Liberation Sans al renderizar los SVG, Inter en la importación a Figma). En Android la app usa la sans serif del sistema (Roboto) con los mismos tamaños y pesos, sin cargar fuentes externas.
+La tipografía del Figma es **Inter**. La app carga Inter empaquetada localmente en `assets/fonts/` (Regular y Bold, licencia SIL Open Font License en `assets/fonts/OFL.txt`) con `expo-font`, así que no necesita conexión para mostrarla. Las pantallas M5 a M8 usan Inter con los mismos tamaños y pesos del Figma; cada peso tiene su propia familia (`Inter-Regular`, `Inter-Bold`) porque Android no elige la variante negrita de una fuente personalizada a partir de `fontWeight`.
 
 ## Pantallas
 

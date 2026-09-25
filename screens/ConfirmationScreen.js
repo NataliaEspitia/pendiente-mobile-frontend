@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
-import { colors, statusBarInset, lineHeight, textTop, pressedFeedback } from '../theme';
+import { colors, fonts, statusBarInset, lineHeight, textTop, pressedFeedback } from '../theme';
 
 // M8 Confirmación. Geometry from mockup m8 (frame 390x800).
 const CIRCLE_R = 46;
@@ -73,12 +73,13 @@ const styles = StyleSheet.create({
     top: textTop(290, 24),
     fontSize: 24,
     lineHeight: lineHeight(24),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.ink,
   },
   name: {
     ...centered,
     top: textTop(326, 16),
+    fontFamily: fonts.regular,
     fontSize: 16,
     lineHeight: lineHeight(16),
     color: colors.g1,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     top: textTop(412, 17),
     fontSize: 17,
     lineHeight: lineHeight(17),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.ok,
   },
   close: {
@@ -112,5 +113,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  closeText: { fontSize: 15, lineHeight: lineHeight(15), fontWeight: '700', color: colors.prim },
+  closeText: { fontSize: 15, lineHeight: lineHeight(15), fontFamily: fonts.bold, color: colors.prim },
 });

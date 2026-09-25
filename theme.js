@@ -24,6 +24,14 @@ export const colors = {
   photoLine: '#E8C88F',
 };
 
+// Inter, the Figma font, bundled in assets/fonts (SIL OFL 1.1, see OFL.txt).
+// Android ignores fontWeight on custom fonts, so each weight is its own family.
+export const fontFiles = {
+  'Inter-Regular': require('./assets/fonts/Inter-Regular.ttf'),
+  'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
+};
+export const fonts = { regular: 'Inter-Regular', bold: 'Inter-Bold' };
+
 // Mockup frame used for pixel-perfect work, in dp.
 export const FRAME = { width: 390, height: 800 };
 

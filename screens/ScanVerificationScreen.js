@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet, StatusBar } from 'react-native';
 import PhotoPills from '../components/PhotoPills';
 import CameraView from '../components/CameraView';
-import { colors, statusBarInset, lineHeight, textTop, pressedFeedback } from '../theme';
+import { colors, fonts, statusBarInset, lineHeight, textTop, pressedFeedback } from '../theme';
 
 // M7 Verificación por escaneo. Geometry from mockup m7 (frame 390x800).
 // Tapping the viewfinder simulates a match; both paths lead to M8, as in the Figma prototype.
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     top: textTop(52, 17),
     fontSize: 17,
     lineHeight: lineHeight(17),
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.white,
   },
   reference: { position: 'absolute', left: 32, top: 74 },
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     left: 158,
     right: 16,
     top: textTop(118, 12.5),
+    fontFamily: fonts.regular,
     fontSize: 12.5,
     lineHeight: lineHeight(12.5),
     color: colors.nightMuted,
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: textTop(614, 16),
     textAlign: 'center',
+    fontFamily: fonts.regular,
     fontSize: 16,
     lineHeight: lineHeight(16),
     color: colors.nightText,
@@ -80,5 +82,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  skipText: { fontSize: 15, lineHeight: lineHeight(15), fontWeight: '700', color: colors.nightText },
+  skipText: { fontSize: 15, lineHeight: lineHeight(15), fontFamily: fonts.bold, color: colors.nightText },
 });

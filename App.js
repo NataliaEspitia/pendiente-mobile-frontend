@@ -7,6 +7,8 @@ import VerificationSelectorScreen from './screens/VerificationSelectorScreen';
 import AlarmRingingScreen from './screens/AlarmRingingScreen';
 import ConfirmationScreen from './screens/ConfirmationScreen';
 import ScanVerificationScreen from './screens/ScanVerificationScreen';
+import { useFonts } from 'expo-font';
+import { fontFiles } from './theme';
 
 const C = { ink: '#1a1a1a', g1: '#4d4d4d', g2: '#8c8c8c', g3: '#c9c9c9', g4: '#f0f0f0', white: '#ffffff' };
 const DAYS = ['L','M','M','J','V','S','D'];
@@ -21,8 +23,10 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [alarmToggles, setAlarmToggles] = useState([true,true,false]);
   const sounds = ['Radar','Campanas','Pulso'];
+  const [fontsLoaded, fontError] = useFonts(fontFiles);
 
   const nav = (next) => setScreen(next);
+  if (!fontsLoaded && !fontError) return null;
 
   return (
     <SafeAreaView style={s.safe}>
