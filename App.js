@@ -459,7 +459,7 @@ function AlarmEditor({
           onChangeText={setPurpose}
           placeholder="Ej.: Remedios de mamá"
           placeholderTextColor={colors.g2}
-          style={s.input}
+          style={[s.input, !purpose && s.inputEmpty]}
         />
 
         {hasPhoto ? (
@@ -485,9 +485,14 @@ function AlarmEditor({
               pressed && s.pressed,
             ]}
             onPress={() => nav('camera')}
+            accessibilityRole="button"
           >
             <Text style={s.addPhotoText}>
-              Agregar foto (opcional)
+              + Agregar foto (opcional)
+            </Text>
+
+            <Text style={s.addPhotoHint}>
+              Una foto de lo que quieres recordar
             </Text>
           </Pressable>
         )}
@@ -992,7 +997,7 @@ const s = StyleSheet.create({
     borderColor: colors.prim,
     borderRadius: 10,
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 26.5,
   },
 
   addPhotoText: {
@@ -1000,6 +1005,18 @@ const s = StyleSheet.create({
     fontSize: 14,
     lineHeight: lineHeight(14),
     fontFamily: fonts.bold,
+  },
+
+  addPhotoHint: {
+    marginTop: 7,
+    color: colors.g2,
+    fontSize: 12,
+    lineHeight: lineHeight(12),
+    fontFamily: fonts.regular,
+  },
+
+  inputEmpty: {
+    fontSize: 15,
   },
 
   row: {
